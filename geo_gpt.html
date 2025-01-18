@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoGPT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+            background: #ffffff;
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        p {
+            margin-bottom: 20px;
+            color: #7f8c8d;
+        }
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        .response-box {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            color: white;
+            min-height: 50px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #95a5a6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GeoGPT</h1>
+        <p>Ask me anything about geology, and I'll provide the best answer I can!</p>
+        <form id="questionForm" onsubmit="askQuestion(event)">
+            <textarea id="prompt" placeholder="What do you want to know about rocks, minerals, or geology?"></textarea><br>
+            <button type="submit">Submit Question</button>
+        </form>
+        <div class="response-box" id="responseBox">
+            <p id="response">Your answer will appear here...</p>
+        </div>
+        <div class="footer">
+            <p>Powered by RAG and GPT</p>
+        </div>
+    </div>
+    <script>
+        async function askQuestion(event) {
+            event.preventDefault();
+
+            const prompt = document.getElementById("prompt").value;
+            const responseBox = document.getElementById("responseBox");
+            const responseText = document.getElementById("response");
+            const button = document.querySelector('button');
+
+            if (!prompt) {
+                responseText.textContent = "Please type a question!";
+                responseBox.style.backgroundColor = "#e74c3c";
+                return;
+            }
+
+            button.disabled = true;
+            responseText.innerHTML = '<div class="spinner"></div> Generating answer...';
+            responseBox.style.backgroundColor = "#f39c12";
+
+            try {
+                const res = await fetch("/generate", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ prompt }),
+                });
+
+                const data = await res.json();
+
+                if (data.error) {
+                    responseText.textContent = `Error: ${data.error}`;
+                    responseBox.style.backgroundColor = "#e74c3c";
+                } else {
+                    responseText.textContent = data.response;
+                    responseBox.style.backgroundColor = "#34495e";
+                }
+            } catch (error) {
+                responseText.textContent = "There was an error!";
+                responseBox.style.backgroundColor = "#e74c3c";
+            }
+
+            button.disabled = false;
+        }
+    </script>
+</body>
+</html>

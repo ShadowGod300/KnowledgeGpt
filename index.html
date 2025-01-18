@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge GPT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #2c3e50;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #ecf0f1;
+        }
+
+        .container {
+            background-color: #34495e;
+            border-radius: 16px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+            padding: 50px;
+            text-align: center;
+            width: 100%;
+            max-width: 750px;
+            transform: translateY(-30px);
+            animation: slideIn 1s ease-in-out forwards;
+        }
+
+        h1 {
+            font-size: 42px;
+            color: #ecf0f1;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .option-button {
+            background-color: #3498db;
+            color: white;
+            font-size: 20px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .option-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer {
+            font-size: 16px;
+            color: #bdc3c7;
+            margin-top: 25px;
+            opacity: 0.7;
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose Your Knowledge GPT</h1>
+        <div class="options">
+            <a href="/geogpt"><button class="option-button">GeoGPT</button></a>
+            <a href="/medigpt"><button class="option-button">MediGPT</button></a>
+            <a href="/hassgpt"><button class="option-button">HassGPT</button></a>
+        </div>
+        <div class="footer">
+            <p>Powered by GPT2</p>
+        </div>
+    </div>
+</body>
+</html>
